@@ -1,8 +1,12 @@
 //把express套件用進來
-const express = require('express') 
-const app = express() 
+const express = require('express');
+const app = express();
+const cors = require('cors')
+
 //import table "Posts" in './models' into database
-const db = require('./models')
+app.use(express.json());
+app.use(cors());
+const db = require('./models');
 
 //Routers
 // Require the router module
