@@ -1,0 +1,21 @@
+//把express套件用進來
+const express = require('express') 
+const app = express() 
+//import table "Posts" in './models' into database
+const db = require('./models')
+
+//Routers
+// Require the router module
+postRouter = require('./routes/posts');
+// Use the router module
+app.use("/posts", postRouter);
+//"posts"可以任意取名字
+
+
+//這意味著當應用程式啟動時，它將開始監聽來自端口 3001 的請求。app.listen() 是用於啟動 Express 應用程式的方法。
+db.sequelize.sync().then(()=>{
+    app.listen(3001, ()=>{
+        console.log("Server is running on port 3001");
+    });
+
+});
