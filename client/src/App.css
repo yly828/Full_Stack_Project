@@ -229,3 +229,8 @@ button {
 .loginContainer input {
   border: 2px solid dodgerblue;
 }
+
+.loginContainer label {
+  font-family: Arial, Helvetica, sans-serif;
+
+}
