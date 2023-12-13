@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
-const { sign } = require("jsonwebtoken");
+const { sign } = require("jsonwebtoken"); //use "sign" to create the token
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
           { username: user.username, id: user.id }, // Corrected here
           "importantdata"
         );
-        res.json(accessToken);
+        res.json(accessToken); // generate and send the token to the front-end
       }
     });
   }

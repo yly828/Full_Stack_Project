@@ -35,12 +35,13 @@ function Post() {
         //console.log("Comment Added");
         //newComment is an object, so we have to create another variable to contain the commentBody
         // Why I cannot use setComments([...comments, newComment ])??
-        if (response.data.error){
+        if (response.data.error) {
           alert(response.data.error);
-        } else{ const commentToAdd = { commentBody: newComment }; //Create an object that contains only commentBody
-        setComments([...comments, commentToAdd]);
-        setNewComment(""); //submit後clear the input
-      }
+        } else {
+          const commentToAdd = { commentBody: newComment }; //Create an object that contains only commentBody
+          setComments([...comments, commentToAdd]);
+          setNewComment(""); //submit後clear the input
+        }
       });
   };
   return (

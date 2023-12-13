@@ -13,7 +13,7 @@ function Login() {
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
       if (response.data.error) alert(response.data.error);
       else {
-        sessionStorage.setItem("accessToken", response.data);
+        sessionStorage.setItem("accessToken", response.data); //front-end save the token int he sessionStorage
         //console.log(sessionStorage.getItem("accessToken"));
         navigate("/"); //登陸後自動轉跳到首頁
       }
