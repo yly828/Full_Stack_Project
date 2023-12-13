@@ -46,7 +46,7 @@ function SignUp() {
             placeholder="@12345678"
           />
           <ErrorMessage name="password" component="span" />
-          <button type="submit">Submit</button>
+          <button type="submit">Sign up</button>
         </Form>
       </Formik>
     </div>

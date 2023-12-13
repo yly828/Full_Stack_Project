@@ -19,17 +19,28 @@ function Post() {
 
   const addComment = () => {
     axios
-      .post("http://localhost:3001/comments", {
-        commentBody: newComment,
-        PostId: id,
-      })
+      .post(
+        "http://localhost:3001/comments",
+        {
+          commentBody: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((response) => {
         //console.log("Comment Added");
         //newComment is an object, so we have to create another variable to contain the commentBody
         // Why I cannot use setComments([...comments, newComment ])??
-        const commentToAdd = { commentBody: newComment }; //Create an object that contains only commentBody
+        if (response.data.error){
+          alert(response.data.error);
+        } else{ const commentToAdd = { commentBody: newComment }; //Create an object that contains only commentBody
         setComments([...comments, commentToAdd]);
         setNewComment(""); //submit後clear the input
+      }
       });
   };
   return (
