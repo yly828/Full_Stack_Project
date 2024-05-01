@@ -11,6 +11,9 @@ router.get("/:postId", async (req, res) => {
 });
 router.post("/", validateToken, async (req, res) => {
   const comment = req.body;
+  const username = req.user.username;
+  //user is an object contains username and id
+  comment.username = username;
   await Comments.create(comment);
   res.json(comment);
 });

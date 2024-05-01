@@ -27,7 +27,7 @@ function Post() {
         },
         {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: localStorage.getItem("accessToken"),
           },
         }
       )
@@ -38,7 +38,10 @@ function Post() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          const commentToAdd = { commentBody: newComment }; //Create an object that contains only commentBody
+          const commentToAdd = {
+            commentBody: newComment,
+            username: response.data.username,
+          }; //Create an object that contains only commentBody
           setComments([...comments, commentToAdd]);
           setNewComment(""); //submit後clear the input
         }
@@ -71,6 +74,7 @@ function Post() {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
+                <label>Username: {comment.username}</label>
               </div>
             );
           })}

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 
 //Copy the url from the Insomia "LoginUser" http://localhost:3001/auth.login
 function Login() {
   const [usernameLogin, setUsername] = useState("");
   const [passwordLogin, setPassword] = useState("");
+  const { setAuthState } = useContext(AuthContext);
+
   let navigate = useNavigate();
   const login = () => {
     //自行創立一個物件叫data包含username及password
@@ -13,8 +16,10 @@ function Login() {
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
       if (response.data.error) alert(response.data.error);
       else {
-        sessionStorage.setItem("accessToken", response.data); //front-end save the token int he sessionStorage
+        localStorage.setItem("accessToken", response.data); //front-end save the token int he sessionStorage
         //console.log(sessionStorage.getItem("accessToken"));
+        //changed sessionStorage.setItem("accessToken", response.data) to localStorage
+        setAuthState(true);
         navigate("/"); //登陸後自動轉跳到首頁
       }
     });
