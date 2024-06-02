@@ -11,7 +11,11 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false,
+  });
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/auth", {
@@ -21,13 +25,25 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
   }, []);
-
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    //Put the Key named "accessToken" inside removeItem
+    setAuthState({
+      username: "",
+      id: 0,
+      status: false,
+    });
+  };
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -39,7 +55,7 @@ function App() {
             <div>
               <Link to="/createpost">Create a Post</Link>
             </div>
-            {!authState && (
+            {!authState.status ? (
               <>
                 {" "}
                 <div>
@@ -49,8 +65,12 @@ function App() {
                   <Link to="/signup">Sign Up</Link>
                 </div>
               </>
+            ) : (
+              <button onClick={logout}>Log out</button>
             )}
+            <h1>{authState.username}</h1>
           </div>
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/createpost" element={<CreatePost />} />

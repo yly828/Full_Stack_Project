@@ -19,7 +19,11 @@ function Login() {
         localStorage.setItem("accessToken", response.data); //front-end save the token int he sessionStorage
         //console.log(sessionStorage.getItem("accessToken"));
         //changed sessionStorage.setItem("accessToken", response.data) to localStorage
-        setAuthState(true);
+        setAuthState({
+          username: response.data.username,
+          id: response.data.id,
+          status: true,
+        });
         navigate("/"); //登陸後自動轉跳到首頁
       }
     });

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../helpers/AuthContext";
 
 function Post() {
   let { id } = useParams();
   const [displayPost, setDisplayPost] = useState({});
   const [comments, setComments] = useState([]); //"comments" is an object
   const [newComment, setNewComment] = useState("");
+  const { authState } = useContext(AuthContext);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
@@ -26,9 +28,7 @@ function Post() {
           PostId: id,
         },
         {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
-          },
+          headers: { accessToken: localStorage.getItem("accessToken") },
         }
       )
       .then((response) => {
@@ -45,6 +45,21 @@ function Post() {
           setComments([...comments, commentToAdd]);
           setNewComment(""); //submit後clear the input
         }
+      });
+  };
+
+  const deleteComment = (id) => {
+    axios
+      .delete(`http://localhost:3001/comments/${id}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        alert("Comment has been deleted");
+        setComments(
+          comments.filter((val) => {
+            return val.id != id;
+          })
+        );
       });
   };
   return (
@@ -75,6 +90,9 @@ function Post() {
               <div key={key} className="comment">
                 {comment.commentBody}
                 <label>Username: {comment.username}</label>
+                {authState.username === comment.username && (
+                  <button onClick={() => deleteComment(comment.id)}>X</button>
+                )}
               </div>
             );
           })}

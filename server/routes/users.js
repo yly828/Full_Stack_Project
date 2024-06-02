@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
           { username: user.username, id: user.id }, // Corrected here
           "importantdata"
         );
-        res.json(accessToken); // generate and send the token to the front-end
+        res.json({ token: accessToken, username: username, id: user.id }); // generate and send the token to the front-end
       }
     });
   }
