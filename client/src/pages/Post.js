@@ -32,11 +32,12 @@ function Post() {
         }
       )
       .then((response) => {
-        //console.log("Comment Added");
+        console.log("Comment Added");
         //newComment is an object, so we have to create another variable to contain the commentBody
         // Why I cannot use setComments([...comments, newComment ])??
         if (response.data.error) {
           alert(response.data.error);
+          alert("Error occured when adding a comment");
         } else {
           const commentToAdd = {
             commentBody: newComment,
@@ -54,12 +55,12 @@ function Post() {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
-        alert("Comment has been deleted");
         setComments(
           comments.filter((val) => {
             return val.id != id;
           })
         );
+        alert("Comment has been deleted");
       });
   };
   return (

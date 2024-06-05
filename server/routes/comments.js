@@ -20,7 +20,9 @@ router.post("/", validateToken, async (req, res) => {
 router.delete("/:commentId", validateToken, async (req, res) => {
   const commentId = req.params.commentId;
   //Comments model = table"Comments" in DB
-  Comments.destroy({ where: { id: commentId } });
+  await Comments.destroy({ where: 
+    { id: commentId } });
+  res.json("Deleted Successfully");
 });
 
 module.exports = router;

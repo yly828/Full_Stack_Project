@@ -16,7 +16,8 @@ function Login() {
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
       if (response.data.error) alert(response.data.error);
       else {
-        localStorage.setItem("accessToken", response.data); //front-end save the token int he sessionStorage
+        localStorage.setItem("accessToken", response.data.token);
+        //front-end save the token int he sessionStorage
         //console.log(sessionStorage.getItem("accessToken"));
         //changed sessionStorage.setItem("accessToken", response.data) to localStorage
         setAuthState({

@@ -35,14 +35,11 @@ function App() {
         }
       });
   }, []);
+
   const logout = () => {
     localStorage.removeItem("accessToken");
-    //Put the Key named "accessToken" inside removeItem
-    setAuthState({
-      username: "",
-      id: 0,
-      status: false,
-    });
+
+    setAuthState({ username: "", id: 0, status: false });
   };
   return (
     <div className="App">
@@ -55,9 +52,8 @@ function App() {
             <div>
               <Link to="/createpost">Create a Post</Link>
             </div>
-            {!authState.status ? (
+            {!authState.status && (
               <>
-                {" "}
                 <div>
                   <Link to="/login">Login</Link>
                 </div>
@@ -65,10 +61,11 @@ function App() {
                   <Link to="/signup">Sign Up</Link>
                 </div>
               </>
-            ) : (
-              <button onClick={logout}>Log out</button>
             )}
-            <h1>{authState.username}</h1>
+            <div className="loggedInContainer">
+              <h1>{authState.username} </h1>
+              {authState.status && <button onClick={logout}> Logout</button>}
+            </div>
           </div>
 
           <Routes>
